@@ -1,0 +1,1 @@
+Arbitrarily set the sample rate of a sample
