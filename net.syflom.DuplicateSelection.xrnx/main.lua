@@ -1,24 +1,24 @@
--- Duplicate -- 
+-- Duplicate Selection -- 
 -- A tool for duplicating the current selection in a pattern
 -- Written by Patrick Gill (c) 2015
 
-local rs = renoise.song()
-
 local function set_edit_position(line)
+  local rs = renoise.song()
   rs.transport.edit_pos = renoise.SongPos(rs.selected_sequence_index,line)
 end
 
 local function select_duplicate()
+  local rs = renoise.song()
   local pattern_length = rs.selected_pattern.number_of_lines
   if rs.selection_in_pattern.end_line ~= pattern_length then
     local new_selection = rs.selection_in_pattern
     local height = new_selection.end_line - new_selection.start_line + 1
 
     new_selection.start_line = math.min(new_selection.start_line + height, pattern_length) -- to stop overflow
+    set_edit_position(new_selection.start_line)
+    
     new_selection.end_line = math.min(new_selection.end_line + height, pattern_length)
     rs.selection_in_pattern = new_selection
-    
-    set_edit_position(new_selection.start_line)
   end
 end
 
@@ -27,6 +27,7 @@ local function insert_blank_lines(pos)
 end
 
 local function duplicate_selection(selection_in_pattern)
+  local rs = renoise.song()
   local pattern_iter = rs.pattern_iterator
   local pattern_index = rs.selected_pattern_index
   local selection = selection_in_pattern
@@ -53,26 +54,23 @@ local function duplicate_selection(selection_in_pattern)
       end
     end
   end
+  select_duplicate()
 end
 
 local function duplicate()
+  local rs = renoise.song()
   if rs.selection_in_pattern ~= nil then -- makes sure something is selected before attempting anything
     duplicate_selection(rs.selection_in_pattern)
-    select_duplicate()
   end
 end
 
 renoise.tool():add_keybinding {
   name = "Pattern Editor:Selection:Duplicate Selection",
-  invoke = function()
-    duplicate()
-  end
+  invoke = duplicate
 }
 
 renoise.tool():add_menu_entry {
   name = "Pattern Editor:Selection:Duplicate Selection",
-  invoke = function()
-    duplicate()
-  end
+  invoke = duplicate
 }
 
