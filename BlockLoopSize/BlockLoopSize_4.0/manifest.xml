@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RenoiseScriptingTool>
+  <ApiVersion>4.0</ApiVersion>
+  <Id>net.syflom.BlockLoopSize</Id>
+  <Version>4.0.0</Version>
+  <Name>Loop Block Size</Name>
+  <Author>Syflom</Author>
+  <Description>Change the loop block size size with keyboard shortcuts or MIDI triggers.
+Bind the keyboard in the Renoise preferences under Global > Transport.
+MIDI in MIDI Mapping under Global Mappings > Loop Block Size.
+
+Special thanks to Cas.</Description>
+  <Category>Transport</Category>
+</RenoiseScriptingTool>
